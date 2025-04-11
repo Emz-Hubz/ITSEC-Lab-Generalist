@@ -15,6 +15,7 @@ The lab consists of multiple virtual machines, interconnected through virtual sw
 - Log Server: Debian 12 with rsyslog configured to receive logs over UDP
 - Internet Access: GNS3 NAT node connected via firewall
 - Switching: Virtual Ethernet switches for each network zone
+- Manual test client: TinyCore Linux (for traffic simulation)
 
 ## Network Segmentation
 
@@ -41,9 +42,9 @@ The environment is logically segmented into three primary network zones:
 - GNS3
 - VyOS 1.4 (Sagitta)
 - Debian 12 (rsyslog)
-- Ubuntu Server 22.04
+- Ubuntu Server 24.04
 - Suricata
-- VPCS or TinyCore Linux (for lightweight client simulation)
+- TinyCore Linux (CorePlus) — Lightweight test client, used for network verification and simulated user behavior
 
 ## Screenshots
 
@@ -55,6 +56,20 @@ _Include images of the GNS3 topology, Suricata alerts, and log server output as 
 - Detect basic network-level intrusions via IDS
 - Centralize log collection from multiple sources
 - Simulate enterprise-like network challenges and defense mechanisms
+
+## Usage Examples
+
+### Sending a test syslog message from TinyCore Linux using netcat
+
+```bash
+echo "<13>Test: Syslog test from Internal-Client" | nc -u -w1 10.0.2.20 514
+```
+
+This message is received and written to `/var/log/remote.log` on the log server. The test script can be found at:
+
+```bash
+scripts/rsyslog-test.sh
+```
 
 ## Future Enhancements
 
@@ -74,4 +89,6 @@ _Include images of the GNS3 topology, Suricata alerts, and log server output as 
     rsyslog-test.sh
 README.md
 ```
+
+
 
