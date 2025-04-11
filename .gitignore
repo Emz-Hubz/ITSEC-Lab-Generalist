@@ -1,0 +1,19 @@
+# ISO- and images
+*.iso
+*.qcow2
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
+# Python-cache 
+__pycache__/
+*.pyc
+
+# Systemspecific files
+.DS_Store
+
+# Editing files
+.idea/
+.vscode/
