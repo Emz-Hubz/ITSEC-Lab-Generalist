@@ -26,7 +26,7 @@ sudo chmod 664 /var/log/remote.log
 ### TinyCore Linux: No network after boot
 - Manually set up IP and routing:
 ```bash
-sudo ifconfig eth0 10.0.1.50 netmask 255.255.255.0 up
+sudo ifconfig eth0 Y.X.0.0netmask 255.255.255.0 up
 sudo route add default gw 10.0.1.1
 echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
 ```
