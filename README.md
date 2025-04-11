@@ -95,7 +95,7 @@ scripts/rsyslog-test.sh
 README.md
 TROUBLESHOOTING.md
 ```
-For common setup issues, see TROUBLESHOOTING.md.
+For common setup issues, see [TROUBLESHOOTING.md](./TROUBLESHOOTING.MD).
 
 
 
