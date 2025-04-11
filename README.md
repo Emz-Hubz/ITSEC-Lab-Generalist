@@ -42,13 +42,17 @@ The environment is logically segmented into three primary network zones:
 - GNS3
 - VyOS 1.4 (Sagitta)
 - Debian 12 (rsyslog)
-- Ubuntu Server 24.04
+- Ubuntu Server 22.04 / 24.04
 - Suricata
 - TinyCore Linux (CorePlus) — Lightweight test client, used for network verification and simulated user behavior
 
 ## Screenshots
 
-_Include images of the GNS3 topology, Suricata alerts, and log server output as appropriate._
+_Example of the GNS3 topology:_
+
+![Network Topology](topology/current-topology.png)
+
+_Include images of Suricata alerts and log server output as appropriate._
 
 ## Objectives
 
@@ -81,14 +85,25 @@ scripts/rsyslog-test.sh
 
 ```
 /topology/
-    diagram.png
+    current-topology.png
 /configs/
-    vyos-config.txt
+    vyos-basic.conf
+    rsyslog-udp-input.conf
     suricata.yaml
 /scripts/
     rsyslog-test.sh
 README.md
 ```
+
+
+
+
+
+
+
+
+
+
 
 
 
