@@ -93,8 +93,9 @@ scripts/rsyslog-test.sh
 /scripts/
     rsyslog-test.sh
 README.md
+TROUBLESHOOTING.md
 ```
-
+For common setup issues, see TROUBLESHOOTING.md.
 
 
 
