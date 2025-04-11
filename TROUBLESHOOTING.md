@@ -27,14 +27,14 @@ sudo chmod 664 /var/log/remote.log
 - Manually set up IP and routing:
 ```bash
 sudo ifconfig eth0 Y.X.0.0netmask 255.255.255.0 up
-sudo route add default gw 10.0.1.1
+sudo route add default gw X.Y.O.1
 echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
 ```
 
 ### TinyCore Linux: logger -n fails
 - Use netcat instead:
 ```bash
-echo "<13>Syslog test" | nc -u -w1 10.0.2.20 514
+echo "<13>Syslog test" | nc -u -w1 X.C.Y.20 514
 ```
 
 ### General Tip: rsyslog syntax errors
