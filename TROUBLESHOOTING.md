@@ -45,3 +45,64 @@ sudo systemctl status rsyslog
 ```
 - Use `tail -f /var/log/syslog` or `journalctl -xe` to debug.
 
+### Issue: `ens4` shows `NO-CARRIER` even after setting `promisc` mode
+
+**Symptom:**
+After enabling promiscuous mode on `ens4`:
+
+```bash
+sudo ip link set ens4 promisc on
+```
+
+The output of `ip link show ens4` shows:
+
+```
+<NO-CARRIER,BROADCAST,MULTICAST,PROMISC,UP>
+```
+
+And `ethtool ens4` returns:
+
+```
+Link detected: no
+```
+
+**Cause:**
+The second network adapter (ens4 / Ethernet1) on the IDS machine is not physically connected in GNS3 – meaning it’s not receiving any link signal. This is often caused by incorrect wiring between the IDS, the hub, and the VyOS router.
+
+**Solution:**
+
+1. **Verify adapter setup in GNS3:**
+   - Right-click IDS → Configure → Network → Custom Adapters
+   - Ensure that **Adapter 1 (Ethernet1)** is enabled and set to `e1000`
+
+2. **Correct the cable setup:**
+   - Connect **Ethernet1 (Adapter 1)** on IDS to **port e2** on the hub
+   - Ensure the hub is already connected to **VyOS eth1**
+
+3. **Restart the IDS machine**
+
+4. **Validate:**
+   Run:
+
+   ```bash
+   ip link show ens4
+   ```
+
+   You should now see:
+
+   ```
+   <BROADCAST,MULTICAST,PROMISC,UP,LOWER_UP>
+   ```
+
+   and:
+
+   ```bash
+   ethtool ens4
+   ```
+
+   should show:
+
+   ```
+   Link detected: yes
+   ```
+
