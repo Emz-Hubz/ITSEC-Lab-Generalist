@@ -1,10 +1,17 @@
 # IT Security Lab Environment – GNS3 Project
 
+## Project Status
+
+This lab is currently under development. Core infrastructure is complete, including routing, segmentation, and centralized logging. IDS functionality isin progress. All updates are reflected progressively in this repository.
+
+
 This repository documents a simulated enterprise network environment built in GNS3. The project is designed to demonstrate broad IT security skills relevant for a generalist role, including network segmentation, intrusion detection, log centralization, and firewall configuration.
+
 
 ## Overview
 
-The lab consists of multiple virtual machines, interconnected through virtual switches and routers, with clearly separated network zones and realistic services. This environment is intended to replicate the architecture and challenges of a small-to-medium enterprise network.
+The lab consists of multiple virtual machines, interconnected through virtual switches and routers, with clearly separated network zones and realistic services. The IDS node includes two network interfaces: one for management and internet access, and a second in promiscuous mode for passive traffic inspection via a hub. This environment is intended to replicate the architectureand challenges of a small-to-medium enterprise network. 
+
 
 ## Lab Architecture
 
