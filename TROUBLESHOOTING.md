@@ -105,4 +105,107 @@ The second network adapter (ens4 / Ethernet1) on the IDS machine is not physical
    ```
    Link detected: yes
    ```
+  
+---
+
+### Issue: Promiscuous mode on `ens4` not persistent after reboot
+
+**Symptom:**
+Even after enabling promiscuous mode with:
+
+```bash
+sudo ip link set ens4 promisc on
+```
+
+The setting is lost after a system reboot. `ip link show ens4` no longer shows `PROMISC`.
+
+**Initial attempt (did not work):**
+Tried using a `.link` file:
+
+```bash
+sudo nano /etc/systemd/network/10-ens4.link
+```
+
+Content:
+
+```ini
+[Match]
+MACAddress=0c:ea:d3:02:00:01
+
+[Link]
+Name=ens4
+Promiscuous=yes
+```
+
+This resulted in a warning:
+```
+Unknown key name 'Promiscuous' in section 'Link', ignoring
+```
+
+**Conclusion:** The `Promiscuous=` key is not supported in systemd `.link` files.
+
+**Working solution: Create a systemd service**
+
+Create a service file:
+
+```bash
+sudo nano /etc/systemd/system/set-promisc-ens4.service
+```
+
+Content:
+
+```ini
+[Unit]
+Description=Enable promisc mode on ens4
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/ip link set ens4 promisc on
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Enable and start the service:
+
+```bash
+sudo systemctl daemon-reexec
+sudo systemctl daemon-reload
+sudo systemctl enable set-promisc-ens4.service
+sudo systemctl start set-promisc-ens4.service
+```
+
+**Verify:**
+
+```bash
+ip link show ens4
+```
+
+Expected output:
+```
+<BROADCAST,MULTICAST,PROMISC,UP,LOWER_UP>
+```
+
+Also verify service status:
+
+```bash
+systemctl status set-promisc-ens4.service
+```
+
+It should show:
+```
+Active: active (exited)
+```
+
+Reboot and check again to confirm persistence:
+
+```bash
+sudo reboot
+ip link show ens4
+```
+
+---
+
 
