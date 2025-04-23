@@ -1,5 +1,19 @@
 ## Troubleshooting
 
+## Troubleshooting Index
+
+- [Ubuntu Server boots to black screen after install](#ubuntu-server-boots-to-black-screen-after-install)
+- [rsyslog errors when enabling UDP input](#rsyslog-errors-when-enabling-udp-input)
+- [Log file permissions issues (rsyslog)](#log-file-permissions-issues-rsyslog)
+- [Debian: Missing network mirror during install](#debian-missing-network-mirror-during-install)
+- [TinyCore Linux: No network after boot](#tinycore-linux-no-network-after-boot)
+- [TinyCore Linux: logger -n fails](#tinycore-linux-logger--n-fails)
+- [General Tip: rsyslog syntax errors](#general-tip-rsyslog-syntax-errors)
+- [Issue: ens4 shows NO-CARRIER even after setting promisc mode](#issue-ens4-shows-no-carrier-even-after-setting-promisc-mode)
+- [Issue: Promiscuous mode on ens4 not persistent after reboot](#issue-promiscuous-mode-on-ens4-not-persistent-after-reboot)
+- [Elastic Stack: GPG key error when adding APT repository](#elastic-stack-gpg-key-error-when-adding-apt-repository)
+
+
 ### Ubuntu Server boots to black screen after install
 - Remove the ISO from the CD/DVD drive in GNS3 before rebooting.
 - Set boot priority to HDD in VM settings.
