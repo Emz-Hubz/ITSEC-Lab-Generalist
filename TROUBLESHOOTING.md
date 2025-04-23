@@ -205,7 +205,51 @@ Reboot and check again to confirm persistence:
 sudo reboot
 ip link show ens4
 ```
+---
+
+### Elastic Stack: GPG key error when adding APT repository
+
+**Symptom:**
+After adding the Elastic APT repository, `apt update` fails with an error such as:
+
+```
+The following signatures couldn't be verified because the public key is not available: NO_PUBKEY D27D666CD88E42B4
+```
+
+**Cause:**
+APT cannot validate the repository metadata because the required GPG key was either missing, improperly formatted, or not associated with the repository via `signed-by=`.
+
+**Initial troubleshooting:**
+- Attempted to add the key using `apt-key`, which is deprecated.
+- Attempted to add key using `/usr/share/keyrings/elasticsearch-keyring.gpg` but encountered signature mismatch.
+
+**Solution:**
+Use Debian’s modern approach with `signed-by=` and place the key in `/etc/apt/keyrings/`:
+
+```bash
+# Remove previous attempts
+sudo rm /etc/apt/sources.list.d/elastic-8.x.list
+sudo rm /etc/apt/sources.list.d/elastic-9.x.list
+sudo rm /usr/share/keyrings/elasticsearch-keyring.gpg
+
+# Re-import the Elastic GPG key
+curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | \
+gpg --dearmor | sudo tee /etc/apt/keyrings/elasticsearch.gpg > /dev/null
+
+# Add the correct repository with signed-by
+echo "deb [signed-by=/etc/apt/keyrings/elasticsearch.gpg] https://artifacts.elastic.co/packages/9.x/apt stable main" | \
+sudo tee /etc/apt/sources.list.d/elastic-9.x.list
+
+# Update package lists
+sudo apt update
+```
+
+**Result:**
+APT update completes without GPG key errors, and Elastic Stack components can now be installed.
 
 ---
+
+
+
 
 

@@ -5,12 +5,12 @@
 This lab is currently under development. Core infrastructure is complete, including routing, segmentation, and centralized logging. IDS functionality isin progress. All updates are reflected progressively in this repository.
 
 
-This repository documents a simulated enterprise network environment built in GNS3. The project is designed to demonstrate broad IT security skills relevant for a generalist role, including network segmentation, intrusion detection, log centralization, and firewall configuration.
+This repository documents a simulated enterprise network environment built in GNS3. The project is designed to demonstrate broad IT security skills relevant for a generalist role, including network segmentation, intrusion detection, log centralization, and firewall configuration. To expand the log analysis capability of the lab, Elastic Stack (ELK) is installed on the same Log Server that handles rsyslog ingestion. This decision was made to avoid duplicating infrastructure and to simulate a real-world scenario where existing logging nodes evolve into more advanced platforms. The stack enables powerful search, visualization, and detection capabilities without requiring a separate ELK server in the GNS3 topology.
 
 
 ## Overview
 
-The lab consists of multiple virtual machines, interconnected through virtual switches and routers, with clearly separated network zones and realistic services. The IDS node includes two network interfaces: one for management and internet access, and a second in promiscuous mode for passive traffic inspection via a hub. This environment is intended to replicate the architectureand challenges of a small-to-medium enterprise network. 
+The lab consists of multiple virtual machines, interconnected through virtual switches and routers, with clearly separated network zones and realistic services. The IDS node includes two network interfaces: one for management and internet access, and a second in promiscuous mode for passive traffic inspection via a hub. This environment is intended to replicate the architecture and challenges of a small-to-medium enterprise network. 
 
 
 ## Lab Architecture
@@ -19,7 +19,7 @@ The lab consists of multiple virtual machines, interconnected through virtual sw
 - Demilitarized Zone (DMZ): Web server and log server
 - Internal Network: Internal client and internal server
 - IDS Node: Suricata-based intrusion detection on mirrored DMZ traffic
-- Log Server: Debian 12 with rsyslog configured to receive logs over UDP
+- Log Server: Debian 12 with rsyslog and Elastic Stack (Elasticsearch, Logstash, Kibana) for centralized log collection and visualization.
 - Internet Access: GNS3 NAT node connected via firewall
 - Switching: Virtual Ethernet switches for each network zone
 - Manual test client: TinyCore Linux (for traffic simulation)
@@ -84,7 +84,7 @@ scripts/rsyslog-test.sh
 
 ## Future Enhancements
 
-- Integrate Graylog or ELK stack for advanced log analysis
+- Fine-tune Kibana dashboards and explore Elastic detection rules
 - Include VPN access to simulate secure remote connectivity
 - Simulate external attacks using Kali Linux for blue-team training
 
